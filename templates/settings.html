@@ -1,0 +1,38 @@
+{% extends "base.html" %}
+
+{% block content %}
+<div class="container">
+      <!-- Example row of columns -->
+	  {% if current_user.is_authenticated %}
+	  <div class="row">
+		<div class="col-md-4">
+		<h2>Settings</h2>
+		{% if settings_saved %}
+			<div class="alert alert-success" role="alert"><p>Settings successfully saved</p></div>
+		  {% endif %}
+		  {% if error %}
+			<div class="alert alert-danger" role="alert">{{ error }}</div>
+		  {% endif %}
+		<form role="form" action='{{ url_for('settings') }}' method='POST'>
+            <div class="form-group">
+				<label for="mb_username">Mediabase username</label>
+              <input type="text" class="form-control" id='mb_username' name='mb_username' value="{{ current_user.mb_username }}">
+            </div>
+			<div class="form-group">
+				<label for="mb_password">Mediabase password</label>
+              <input type="text" class="form-control" id='mb_password' name='mb_password' value="{{ current_user.mb_password }}">
+            </div>
+            <button type="submit" class="btn btn-success">Save</button>
+          </form>
+		  
+		  </div>
+	  </div>
+	  {% endif %}
+	
+      <hr>
+
+      <footer>
+        <p>&copy; Danil Bokov</p>
+      </footer>
+    </div>
+{% endblock %}

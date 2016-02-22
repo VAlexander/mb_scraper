@@ -1,0 +1,175 @@
+{% extends "base.html" %}
+
+{% block content %}
+<div class="container">
+	  <!-- Example row of columns -->
+	  {% if current_user.is_authenticated %}
+	  <div class="row">
+		<h1></h1>
+	</div>
+	<div class="row">
+		<div class="col-md-4">
+			<form role="form" action='{{ url_for('scrape') }}' method='POST' class="form-horizontal">
+			
+				<div class="form-group">
+					<label for="artist">Artist:</label>
+					<input type="text" class="form-control" id='artist' name='artist' list='artists' />
+					<datalist id="artists">
+						{% for artist_option in artist_select_options %}
+							<option value="{{ artist_option }}">
+						{% endfor %}
+					</datalist> 
+				</div>
+				<div class="form-group">
+					<label for="song">Song:</label>
+					<input type="text" class="form-control" id='song' name='song' list='songs' />
+					<datalist id="songs">
+						{% for song_option in song_select_options %}
+							<option value="{{ song_option }}">
+						{% endfor %}
+					</datalist> 
+				</div>
+				<div class="form-group">
+					<label for="threshold">Threshold:</label>
+					<input type="text" class="form-control" id='threshold' name='threshold' value='1'>
+					
+				</div>
+				<div class="form-group">
+					<label for="daysnum">No. of days:</label>
+					<select class="form-control" name="daysnum" id="daysnum">
+					  <option>1</option>
+					  <option>2</option>
+					  <option>3</option>
+					  <option>4</option>
+					  <option>5</option>
+					  <option>6</option>
+					  <option>7</option>
+					</select>
+				</div>
+				<div class="form-group">
+					<button type="submit" class="btn btn-warning">Scrape</button>
+				</div>
+			</div>
+			
+			<div class="col-md-2 col-md-offset-1">
+				<div class="form-group">
+					<label class="checkbox">
+						<input type="checkbox" name="a1R"> AC -> AC
+					</label>
+					<label class="checkbox">
+						<input type="checkbox" name="a2R"> AC -> Hot AC
+					</label>	
+					<label class="checkbox">
+						<input type="checkbox" name="h1R"> Hit -> Top 40
+					</label>	
+					<label class="checkbox">
+						<input type="checkbox" name="y0R"> Hit -> Rhythmic
+					</label>	
+					<label class="checkbox">
+						<input type="checkbox" name="y1R"> Hit -> Dance
+					</label>	
+					<label class="checkbox">
+						<input type="checkbox" name="r1R"> Rock -> Triple A
+					</label>	
+				</div>
+			</div>
+			<div class="col-md-2 col-md-offset-1">
+				<div class="form-group">
+					<label class="checkbox">
+						<input type="checkbox" name="r2R"> Rock -> Active Rock
+					</label>	
+					<label class="checkbox">
+						<input type="checkbox" name="r3R"> Rock -> Alternative
+					</label>
+					<label class="checkbox">
+						<input type="checkbox" name="g1R"> Gospel -> Overall
+					</label>	
+					<label class="checkbox">
+						<input type="checkbox" name="u1R"> Urban -> Urban
+					</label>	
+					<label class="checkbox">
+						<input type="checkbox" name="u2R"> Urban -> Urban AC
+					</label>	
+					<label class="checkbox">
+						<input type="checkbox" name="c1R"> Country -> Overall
+					</label>	
+
+				</div>
+			</div>
+			</form>
+		
+		<div class="col-md-12">
+			{% for r in results %}
+				<table class="table table-condensed">
+					<h3>{{ r }}</h3>
+					{% for chart in results[r] %}
+					<tr>
+						<td>
+							{{ chart }}
+						</td>
+						<td>
+							{{ results[r][chart]['rank'] }}
+						</td>
+						<td>
+							{{ results[r][chart]['spins'] }}
+						</td>
+						<td>
+							{{ results[r][chart]['top'] }}
+						</td>
+						<td>
+							{{ results[r][chart]['audience'] }}
+						</td>
+					</tr>
+					{% else %}
+					<tr>
+						<td>Nothing found</td>
+					</tr>
+					{% endfor %}
+					
+				<table>
+			{% endfor %}
+		</div>
+	</div>
+	{% if error %}
+			<div class="row">
+				<div class="col-md-4">
+					<div class="alert alert-danger" role="alert">{{ error }}</div>
+				</div>
+			</div>
+		{% endif %}
+	{% if success %}
+		<div class="row">
+		<div class="col-md-4">
+			<div class="alert alert-success" role="alert">{{ success }}</div>
+		</div>
+		</div>	
+	{% endif %}
+	{% if email %}
+	<div class="row">
+	<form role="form" action='{{ url_for('mail') }}' method='POST' class="form-horizontal">
+		<div class="col-md-4">
+		<div class="form-group">
+			
+			<label for="mail">Email</label>
+			<input type="text" class="form-control" id='mail' name='mail' list='emails' />
+			<datalist id="emails">
+				{% for email_option in email_select_options %}
+					<option value="{{ email_option }}">
+				{% endfor %}
+			</datalist>
+			</div>
+			<div class="form-group">
+					<button type="submit" class="btn btn-default">Mail this</button>
+				</div>
+		</div>
+	</form>
+	</div>	
+	{% endif %}
+	{% endif %}
+	<hr>
+
+	  <footer>
+		<p>&copy; Danil Bokov</p>
+	  </footer>
+	</div>
+{% endblock %}

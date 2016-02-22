@@ -107,3 +107,5 @@ $RECYCLE.BIN/
 
 # Windows shortcuts
 *.lnk
+deployment.txt
+main.db

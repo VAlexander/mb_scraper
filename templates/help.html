@@ -1,0 +1,28 @@
+{% extends "base.html" %}
+
+{% block content %}
+    <!-- Main jumbotron for a primary marketing message or call to action -->
+    <div class="jumbotron">
+      <div class="container">
+		{% if current_user.is_authenticated %}
+        <h1>Need some help?</h1>
+        <p>To start scraping, press the "Start scraping" button located in the main page.</p>
+        <p>You'll be redirected to the tool's page. Here you need to fill all the fields.</p>
+		<p>"Artist" field should contain artist name or its part like it is written on mediabase.com (but case is not important). For example, "BIEBER, JUSTIN", "BIEBER", "Bieber" are equal in this case.</p>
+		<p>"Song" field should contain song name or its part like it is written on mediabase.com</p>
+		<p>"Threshold" field should contain a number of the position to look for. For example, "5" will tell the scraper to compare results with top-5</p>
+		<p>"No. of days" should contain the number of days of the report you want to get.</p>
+		<p>At last, check all the needed checkboxes on the right and press "Scrape" button.</p>
+		<p>Scraper needs some time to process requests, so please be patient.</p>
+		<p>When it's done, you'll get the results on the screen.</p>
+		<p>To email the results simply enter your email address into the "email" field and press "Mail this" button.</p>
+		{% endif %}
+      </div>
+    </div>
+	
+    <div class="container">	
+      <footer>
+        <p>&copy; Danil Bokov</p>
+      </footer>
+    </div>
+{% endblock %}

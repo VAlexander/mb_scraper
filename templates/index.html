@@ -1,0 +1,27 @@
+{% extends "base.html" %}
+
+{% block content %}
+    <!-- Main jumbotron for a primary marketing message or call to action -->
+    <div class="jumbotron">
+      <div class="container">
+		{% if current_user.is_authenticated %}
+        <h1>Hello, scraper</h1>
+        <p>Click on the "Start scraping" button to proceed to the scraper.<br/>Press the "Help" button if you need help.</p>
+        
+		<p>
+			<a class="btn btn-warning" href="{{ url_for('help') }}" role="button">Help</a>
+			<a class="btn btn-primary" href="{{ url_for('scrape') }}" role="button">Start scraping &raquo;</a>
+		</p>
+		{% else %}
+		<h1>Hello, stranger</h1>
+		<p>Please, authorize to proceed to the tool. Fill in the fields in the top right corner.</p>
+		{% endif %}
+      </div>
+    </div>
+	
+    <div class="container">	
+      <footer>
+        <p>&copy; Danil Bokov</p>
+      </footer>
+    </div>
+{% endblock %}
