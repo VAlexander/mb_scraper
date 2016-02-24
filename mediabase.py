@@ -5,8 +5,8 @@ from lxml import etree
 
 login_url = "http://mediabase.com/WebLogon/ValidateLogon.asp"
 login_values = {
-	'userName':'tnovia',
-	'password':'tnovia',
+	'userName':'',
+	'password':'',
 	'login.x':'26',
 	'login.y':'10',
 	'login':'LOGIN'
